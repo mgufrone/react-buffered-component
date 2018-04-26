@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buffer component should render correctly 1`] = `
+<div>
+  Update Time: 
+  1524737407890
+  {}
+</div>
+`;
