@@ -14,7 +14,7 @@ export default class BufferedComponent extends React.Component {
    * @var updateCycle
    * @description the threshold cycle you want to hold when props or state being updated
    */
-  updateCycle = 0;
+  cycleBuffer = 0;
   /**
    * @private
    * @type {number}
@@ -33,9 +33,9 @@ export default class BufferedComponent extends React.Component {
     if (!!this.timeBuffer && this.timeBuffer > 0) {
       shouldUpdateByTime = new Date().getTime() - this.lastUpdate >= this.timeBuffer;
     }
-    if (!!this.updateCycle && this.updateCycle > 0) {
+    if (!!this.cycleBuffer && this.cycleBuffer > 0) {
       this.cycles++;
-      shouldUpdateByCycle = this.cycles >= this.updateCycle;
+      shouldUpdateByCycle = this.cycles >= this.cycleBuffer;
     }
     if (shouldUpdateByTime || shouldUpdateByCycle) {
       this.cycles = 0;

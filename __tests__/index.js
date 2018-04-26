@@ -1,48 +1,29 @@
-const test = require('unit.js');
-const MockAdapter = require('axios-mock-adapter');
+import React from 'react';
+import ReactDOM from 'react-dom';
+import renderer from 'react-test-renderer';
+import ComponentTest from '../__components__/ComponentTest';
 
-describe('', () => {
-});
 
-describe('shortened url', () => {
-  // This sets the mock adapter on the default instance
-  it('should give me a proper and valid response', ()=>{
-    setKey('allsjdfkljas');
-    shorten('https://mgufron.com').then((response) => {
-      // console.log(response);
-      const {data, config} = response;
-      test.value(data.hasOwnProperty('kind')).isEqualTo(true);
-      test.value(data.hasOwnProperty('id')).isEqualTo(true);
-      test.value(data.hasOwnProperty('longUrl')).isEqualTo(true);
-      test.value(data.id).isEqualTo('https://goo.gl/alksjd');
-      test.value(data.longUrl).isEqualTo("https://mgufron.com");
-      test.value(config.params.key).isEqualTo('allsjdfkljas');
-      test.value(JSON.parse(config.data).longUrl).isEqualTo('https://mgufron.com');
-      test.value(config.method).isEqualTo('post');
-    }).catch(err => console.log(err));
+describe('buffer component', () => {
+  it('should render correctly', () => {
+    const tree = renderer.create(<ComponentTest />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
+  it('should update last update when the time buffer passed', () => {
+    const node = document.createElement('div');
+    const component = ReactDOM.render(<ComponentTest message={`hello`} timeBuffer={500}/>, node);
+    const time = component.lastUpdate;
+    ReactDOM.render(<ComponentTest message={`wow`} timeBuffer={500}/>, node)
+    expect(component.lastUpdate === time).toBe(true);
+  })
+  it('should update component when the cycle buffer passed', () => {
+    const node = document.createElement('div');
+    const component = ReactDOM.render(<ComponentTest message={`hello`} cycleBuffer={10}/>, node);
+    const cycles = component.cycles;
+    ReactDOM.render(<ComponentTest message={`wow`} cycleBuffer={10}/>, node)
+    console.log(cycles, component.cycles);
+    expect(component.cycles === cycles).toBe(false);
+  })
 });
 
-describe('expand url', () => {
-  // This sets the mock adapter on the default instance
-  it('should give me a proper and valid response', ()=>{
-    setKey('allsjdfkljas');
-    expand('https://goo.gl/alksjd').then((response) => {
-      // console.log(response);
-      const {data, config} = response;
-      test.value(data.hasOwnProperty('kind')).isEqualTo(true);
-      test.value(data.hasOwnProperty('id')).isEqualTo(true);
-      test.value(data.hasOwnProperty('longUrl')).isEqualTo(true);
-      test.value(data.id).isEqualTo('https://goo.gl/alksjd');
-      test.value(data.status).isEqualTo('OK');
-      test.value(data.longUrl).isEqualTo("https://mgufron.com");
-      test.value(config.params.key).isEqualTo('allsjdfkljas');
-      test.value(config.params.shortUrl).isEqualTo('https://goo.gl/alksjd');
-      test.value(config.method).isEqualTo('get');
-    }).catch(err => console.log(err));
-  });
-});
 
-describe('statistics', () => {
-
-});
