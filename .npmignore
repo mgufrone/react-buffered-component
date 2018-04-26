@@ -1,2 +1,6 @@
-setupJest.js
 __tests__
+__components__
+yarn.lok
+package-lock.json
+.gitignore
+.babelrc

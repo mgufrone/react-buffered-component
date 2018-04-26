@@ -1,5 +1,13 @@
 language: node_js
 node_js:
-  - "8"
-  - "9"
-  - "10"
+- '8'
+- '9'
+- '10'
+env:
+  global:
+    secure: ZkMw9Z6PYS+h9Prens4JDEmVY40GykUdC4LT6lsWPsoYSA86Ls33I5Y9tpzh7Tjp8B9yStXa0v6C0WgC0Q8liySLhaWjV2a6u7j94eD1kqybN+HX8rWfEcyBkvdJRZoXuBV38AJp5xz4+WgIRuj2aslEQPh4eyTgDw63s0QHC8etQaWjzcgIMsBDufTEVpElqfjwLR3n1GkiIeqHKmhmTIxjZZ++G8dI5B09K8PqzO3CFZh1lr/K/6KHeQO+ZpCe/Y5LvYxplFW+djRLQ7DhpVxaTiPcCgJwLTT1QM9C1ZTZ7g6FWv96bQzci3DvnqPU1kUGb6tgxgfA3TQzyGQO8L2KlKp1eypln3vrqFx4iSYM7O3vN1ji/xx6FOUMcPDA2bquWv9Fwzpoku0g0LkTq8EdgCleLNJliPdFETOLBJtzvs+sB9J5NhS8Q4zQ9iN6OO2Kh6RqQaQXiiSbmHUcywnBRR+UHVEWgg2izTk6zgDE5HyvPf5mjpcwiVWqLWAGNB5LyEw1GRE1JIggM7yR4NLZv/nlubb9R+XNNrt1fPSKqrYgYjMlqjPks56wlxSiwdPYPAAbkHFyKifIhLu9ztI184zR5W7l2MVvutdWWRl8ib9Z9IHBtRm6rn+wdwvjuN+cdAQYRgmVZMwSJnSdfJpr1lZqPGwZJtSwx2smJT8=
+deploy:
+- if [[ -n "${TRAVIS_TAG}" && "${TRAVIS_TAG}" =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ ]]; then
+  npm run version $TRAVIS_TAG ; fi
+- if [[ -n "${TRAVIS_TAG}" && "${TRAVIS_TAG}" =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ ]]; then
+  npm run publish; fi
