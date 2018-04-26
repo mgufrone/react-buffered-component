@@ -10,8 +10,11 @@ before_script:
 - npm i
 script:
 - npm run test
-after_success:
-- if [[ -n "${TRAVIS_TAG}" && "${TRAVIS_TAG}" =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ ]]; then
-  npm run version $TRAVIS_TAG; fi
-- if [[ -n "${TRAVIS_TAG}" && "${TRAVIS_TAG}" =~ /^v\d+\.\d+(\.\d+)?(-\S*)?$/ ]]; then
-  npm run publish; fi
+deploy:
+  provider: npm
+  email: mgufronefendi@gmail.com
+  api_key:
+    secure: QlSufjtR8XG57kZxNaIEJVC2iBjLcgbdtH8tRoDZGNx+tqYuEFqsfjBJ4l9d4xcO9UUmt5unjEEOGUG6w0sUp3wyBS14ZJiVhU0gFCzjYUGoT2tlPGN9rRUvRFDYYTKvbBb14oZuCPmiOO1ELS2DtchRX/VkbAtFNEHvRqxTF4P9aM35hBLSntFfAOue66qEZKn4vvUNDTncRjKK9BR/qonflX0KASKqfaOTr9tUBGmWIveC6Br/w/01rkZupcmbfMrb9H0Xyjk1dTQzHIzMBb8HNwmkGvow9pZthYpAm2EGxoP2egBsxKGzShJ2sCg+NfZ2Th3nA93sZzNYPouITXQHREsRW0Oa2YxwrbLOTWSE03lgXC/bq/WcIhB9DwToupRb/vMXtCo25sU9W4FiJKhLLf8leOlBNT6Kw0cVtlEcn+uxHjmFaLYvcFp7EkEXGAX+cdiacgT087RoDIL8SAk/YoOXfFU8Z9sZUBAKAvybGhRDsC94Dy+3gH8jortIjICPTV7wbhTGzsmRz4oFjIlABiX7q1DYBeRdTxYZ9/F0TJijfMfwwRGpq1hfwkxxd9B2VosYSbNlCb1QsG0pWksEaC/ymZDwyQ4v+zVQqN1TgcGM61AKmsJZ0JBGO2lShlkiUxbJLvCbDyvnLc0x8TwhjRgGowMiVcVICKGkKKk=
+  on:
+    tags: true
+    repo: mgufrone/react-buffered-component
