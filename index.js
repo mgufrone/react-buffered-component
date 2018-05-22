@@ -5,7 +5,7 @@ export default class BufferedComponent extends React.Component {
    *
    * @type {number}
    * @var timeBuffer
-   * @description The time buffer you would like to wait in miliseconds
+   * @description The time buffer you would like to wait in milliseconds
    */
   timeBuffer = 0;
   /**

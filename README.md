@@ -1,66 +1,57 @@
-[![Build Status](https://travis-ci.org/mgufrone/react-native-google-shortener.svg?branch=master)](https://travis-ci.org/mgufrone/react-native-google-shortener)
+[![Build Status](https://travis-ci.org/mgufrone/react-buffered-component.svg?branch=master)](https://travis-ci.org/mgufrone/react-native-google-shortener)
 
-## Google URL Shortener
+## React Buffered Component
 
-This package is supposed to communicate between API of Google URL Shortener to your app.
+This package allows you to make your component update buffered on a certain condition.
 
 
 ## Installation
 You can run this package to use the package
 ```shell
-npm install --save react-native-google-shortener
+npm install --save react-buffered-component
 ```
 
 ## How to use the package
-The first thing you need to do is set the Google API key. You can obtain to your [Google Developer Console](https://console.developers.google.com).
 
+You can just extends this base class for your component.
 ```js
-const { setKey, shorten, expand } = require('react-native-google-shortener');
 
-setKey('your google api key');
+import BufferedComponent extends 'react-buffered-component';
+
+class HelloComponent extends BufferedComponent {
+    // set the time you would like to wait in milliseconds
+    // default value is 0;
+    timeBuffer = 1000;
+    // the time when your component receive an update, either props update or internal state update
+    cycleBuffer = 10;
+
+    // if you define both of them above, the BufferedComponent will determine which one
+    // will be quickest to update the component.
+
+    render() {
+        // do your thing here
+    }
+}
+
 ```
 
-### Shorten URL
-Then, to shorten your long URL, you can use this code.
-```js
-shorten('https://mgufron.com').then(response => {
-  console.log('shorten url', response.id);
-  console.log('long url', response.longUrl);
-})
+The `BufferedComponent` use `shouldComponentUpdate` cycle to buffer the update. if you want to override it, make sure you call something like this
+
+
+```
+class HelloComponent extends BufferedComponent {
+....
+    shouldComponentUpdate(props, state){
+        ...
+        const shouldUpdate = super();
+        // do your own logic here.
+        ...
+        // then do return a boolean value to determine if it would update the component or not
+    }
+....
+}
 ```
 
-### Expand Shortened URL
-
-```js
-// first argument should shortened url
-expand('https://goo.gl/').then(response => {
-  console.log(response.id);
-  console.log(response.longUrl);
-});
-```
-
-Full example code would be something like this
-```js
-const { setKey, shorten } = require('react-native-google-shortener');
-setKey('your google api key');
-shorten('https://mgufron.com').then(response => {
-  // do your thing
-  console.log('shorten url', response.id);
-  console.log('long url', response.longUrl);
-});
-expand('https://goo.gl/alskd').then(response => {
-  console.log(response.id);
-  console.log(response.longUrl);
-  console.log(response.status);
-});
-// include projection or analytics
-expand('https://goo.gl/alkaslk').then(response => {
-  console.log(response.id);
-  console.log(response.longUrl);
-  console.log(response.status);
-  console.log(response.analytics);
-})
-```
 
 ## Contribution
 I love feedback so you can put your feedback to Issues or make a pull request to this package. I love to get any comments regarding my work. Or you can click donate button below. Happy Coding.
